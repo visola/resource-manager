@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class ResourceTag extends SimpleTagSupport {
 	
 	private static final String DEFAULT_ENCODING = "UTF-8";
-	private static final String DEFAULT_SERVLET_PATH = "resources.do";
+	private static final String DEFAULT_SERVLET_PATH = "/resources.do";
 	
 	private String servletPath = DEFAULT_SERVLET_PATH;
 	private String encoding = DEFAULT_ENCODING;
@@ -37,6 +37,9 @@ public class ResourceTag extends SimpleTagSupport {
 		if (servletPath != null) {
 			this.servletPath = servletPath;
 		}
+		
+		// Add context path to resource servlet name
+		this.servletPath = context.getServletContext().getContextPath() + this.servletPath;
 		
 		// Check for encoding to be used from a init parameter
 		String encoding = context.getServletContext().getInitParameter(ResourceTag.class.getName().concat("encoding"));
@@ -94,7 +97,7 @@ public class ResourceTag extends SimpleTagSupport {
 		tag.append(" ");
 		tag.append(type.getAttributeName());
 		tag.append("=\"");
-		tag.append(URLEncoder.encode(servletPath, encoding));
+		tag.append(servletPath);
 		tag.append("?");
 		
 		// Add the files to be loaded as parameter
