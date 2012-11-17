@@ -15,6 +15,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,7 @@ public class ResourceTag extends SimpleTagSupport {
 			file = file.trim();
 			if ("".equals(file)) continue;
 			
-			String extension = FileUtils.getExtension(file);
+			String extension = FilenameUtils.getExtension(file);
 			
 			List<String> filesForExtension = filesByExtension.get(extension);
 			if (filesForExtension == null) {

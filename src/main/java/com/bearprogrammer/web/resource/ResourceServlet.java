@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +32,11 @@ public class ResourceServlet extends HttpServlet {
 		Map<String, String> contents = new HashMap<String, String>();
 
 		// Set content type for the type of the first file requested
-		response.setContentType(TypeFactory.getType(FileUtils.getExtension(files[0])).getContentType());
+		response.setContentType(TypeFactory.getType(FilenameUtils.getExtension(files[0])).getContentType());
 		
 		for (String file : files) {
 			try {
-				String extension = FileUtils.getExtension(file);
+				String extension = FilenameUtils.getExtension(file);
 				
 				String content = ResourceContextListener.getInstance().getResource(file, extension);
 				if (content == null) {
@@ -56,7 +57,7 @@ public class ResourceServlet extends HttpServlet {
 		
 		
 		String path = request.getRequestURI();
-		String requestedExtension = FileUtils.getExtension(path);
+		String requestedExtension = FilenameUtils.getExtension(path);
 		
 		StringBuilder answer = new StringBuilder();
 		if ("json".equals(requestedExtension)) {
