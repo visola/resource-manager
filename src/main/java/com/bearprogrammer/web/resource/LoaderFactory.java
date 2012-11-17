@@ -9,7 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Load all available {@link Loader}s.
+ * Load all available {@link Loader}s registered as service for the
+ * <code>Loader</code> interface.
  * 
  * @author Vinicius Isola (viniciusisola@gmail.com)
  */

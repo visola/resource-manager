@@ -20,18 +20,23 @@ public class WebApplicationFileLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public WebApplicationFileLoader() {
-		context = ResourceContextListener.getInstance().getServletContext();
-		
-		String encoding = context.getInitParameter(WebApplicationFileLoader.class.getName().concat(".encoding"));
-		if (encoding != null) this.encoding = encoding;
+		ResourceContextListener instance = ResourceContextListener.getInstance();
+		if (instance != null) {
+			context = instance.getServletContext();
+			if (context != null) {
+				String encoding = context.getInitParameter(WebApplicationFileLoader.class.getName().concat(".encoding"));
+				if (encoding != null) this.encoding = encoding;
+			}
+		}
 	}
 	
 	private File getFile(String identifier) {
-		String realPath = context.getRealPath(identifier);
-		if (realPath == null) {
-			return null;
+		File f = null;
+		if (context != null) {
+			String realPath = context.getRealPath(identifier);
+			f = new File(realPath);
 		}
-		return new File(realPath);
+		return f;
 	}
 
 	@Override

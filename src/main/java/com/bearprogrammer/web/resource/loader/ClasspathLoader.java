@@ -18,9 +18,14 @@ public class ClasspathLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public ClasspathLoader() {
-		ServletContext context = ResourceContextListener.getInstance().getServletContext();
-		String encoding = context.getInitParameter(this.getClass().getName().concat(".encoding"));
-		if (encoding != null) this.encoding = encoding;
+		ResourceContextListener instance = ResourceContextListener.getInstance();
+		if (instance != null) {
+			ServletContext context = instance.getServletContext();
+			if (context != null) {
+				String encoding = context.getInitParameter(this.getClass().getName().concat(".encoding"));
+				if (encoding != null) this.encoding = encoding;
+			}
+		}
 	}
 
 	@Override
