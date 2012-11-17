@@ -1,0 +1,13 @@
+*.class
+*.log
+*.jar
+*.war
+*.ear
+.project
+.classpath
+.settings/
+target/
+database/
+databases/
+
+
