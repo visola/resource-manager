@@ -1,7 +1,7 @@
 package com.bearprogrammer.resource;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +107,7 @@ public class Wrapper {
 	 * store the result in the {@link #content} variable.
 	 */
 	protected void processContent() throws ProcessingException {
-		List<Processor> processors = type.getProcessors();
+		Collection<Processor> processors = type.getProcessors();
 		if (processors != null) {
 			for (Processor processor : processors) {
 				logger.debug("Processing content '{}' using processor: {}", identifier, processor.getClass().getName());

@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.servlet.ServletContext;
-
 import com.bearprogrammer.resource.Loader;
-import com.bearprogrammer.resource.ResourceContext;
 
 
 public class ClasspathLoader implements Loader {
@@ -18,14 +15,7 @@ public class ClasspathLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public ClasspathLoader() {
-		ResourceContext instance = ResourceContext.getInstance();
-		if (instance != null) {
-			ServletContext context = instance.getServletContext();
-			if (context != null) {
-				String encoding = context.getInitParameter(this.getClass().getName().concat(".encoding"));
-				if (encoding != null) this.encoding = encoding;
-			}
-		}
+		// TODO - Need to find a way to configure encoding
 	}
 
 	@Override

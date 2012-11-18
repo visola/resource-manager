@@ -13,6 +13,7 @@ import com.bearprogrammer.resource.ResourceContext;
 
 
 public class WebApplicationFileLoader implements Loader {
+	// TODO - Need to re-write this class
 	
 	public static final String DEFAULT_ENCODING = "UTF-8";
 	private ServletContext context;
@@ -20,14 +21,14 @@ public class WebApplicationFileLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public WebApplicationFileLoader() {
-		ResourceContext instance = ResourceContext.getInstance();
-		if (instance != null) {
-			context = instance.getServletContext();
-			if (context != null) {
-				String encoding = context.getInitParameter(WebApplicationFileLoader.class.getName().concat(".encoding"));
-				if (encoding != null) this.encoding = encoding;
-			}
-		}
+//		ResourceContext instance = ResourceContext.getInstance();
+//		if (instance != null) {
+//			context = instance.getServletContext();
+//			if (context != null) {
+//				String encoding = context.getInitParameter(WebApplicationFileLoader.class.getName().concat(".encoding"));
+//				if (encoding != null) this.encoding = encoding;
+//			}
+//		}
 	}
 	
 	private File getFile(String identifier) {

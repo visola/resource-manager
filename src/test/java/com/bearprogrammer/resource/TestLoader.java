@@ -6,7 +6,7 @@ import com.bearprogrammer.resource.Loader;
 
 public class TestLoader implements Loader {
 	
-	public static final String IDENTIFIER = "This is a weird protocol";
+	public static final String IDENTIFIER = "this_is_weird.test";
 	public static final String CONTENT = "Hello World!";
 
 	@Override

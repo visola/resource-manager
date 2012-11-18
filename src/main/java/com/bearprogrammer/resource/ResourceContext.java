@@ -54,12 +54,14 @@ public class ResourceContext {
 	 * @return The resource content already processed.
 	 * @throws IOException
 	 *             If any problem happens while loading the resource.
-	 * @throws ResourceNotFoundException
-	 *             If no loader available was able to find the resource.
 	 * @throws ProcessingException
 	 *             If an exception happens while processing the resource.
+	 * @throws ResourceNotFoundException
+	 *             If no loader available was able to find the resource.
+	 * @throws UnknownTypeException
+	 *             If the type is unknown.
 	 */
-	public synchronized String getResource(String identifier) throws IOException, ResourceNotFoundException, ProcessingException {
+	public synchronized String getResource(String identifier) throws IOException, ProcessingException, ResourceNotFoundException,  UnknownTypeException {
 		String extension = FilenameUtils.getExtension(identifier);
 		logger.debug("Getting resource: {} ({})", identifier, extension);
 		Wrapper result = resources.get(identifier);
@@ -67,14 +69,14 @@ public class ResourceContext {
 		if (result == null) {
 			logger.debug("Resource not in cache, loading...");
 			
+			Type type = TypeFactory.getType(extension);
+			if (type == null) {
+				throw new UnknownTypeException("No type available for the specified resource: " + extension);
+			}
+			
 			Loader loader = LoaderFactory.getLoader(identifier);
 			if (loader == null) {
 				throw new ResourceNotFoundException("No loader available for the specified resource: " + identifier);
-			}
-			
-			Type type = TypeFactory.getType(extension);
-			if (type == null) {
-				throw new IllegalArgumentException("No type available for the specified resource: " + extension);
 			}
 			
 			result = new Wrapper(identifier, type, loader);

@@ -1,2 +1,1 @@
-com.bearprogrammer.resource.WebApplicationFileLoader
-com.bearprogrammer.resource.ClasspathLoader
+com.bearprogrammer.resource.loader.ClasspathLoader

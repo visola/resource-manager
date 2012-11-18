@@ -36,9 +36,7 @@ public class ResourceServlet extends HttpServlet {
 		
 		for (String file : files) {
 			try {
-				String extension = FilenameUtils.getExtension(file);
-				
-				String content = ResourceContext.getInstance().getResource(file, extension);
+				String content = ResourceContext.getInstance().getResource(file);
 				if (content == null) {
 					response.sendError(404, "Resource not found: " + file);
 					return;
