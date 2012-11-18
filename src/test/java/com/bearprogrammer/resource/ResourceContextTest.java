@@ -10,7 +10,7 @@ public class ResourceContextTest {
 	@Test
 	public void shouldLoadTestContent() throws Exception {
 		String content = ResourceContext.getInstance().getResource(TestLoader.IDENTIFIER);
-		Assert.assertEquals("Should load test content.", TestLoader.getContent(), content);
+		Assert.assertEquals("Should load test content.", TestLoader.content, content);
 	}
 	
 	@Test(expected=ResourceNotFoundException.class)

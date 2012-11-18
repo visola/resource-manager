@@ -8,12 +8,8 @@ public class TestLoader implements Loader {
 	
 	public static final String IDENTIFIER = "this_is_weird.test";
 	
-	private static long lastModified = System.currentTimeMillis();
-	private static String content = Long.toString(lastModified);
-
-	public static String getContent() {
-		return content;
-	}
+	public static long lastModified = System.currentTimeMillis();
+	public static String content = Long.toString(lastModified);
 
 	@Override
 	public boolean hasResource(String identifier) throws IOException {
@@ -37,5 +33,5 @@ public class TestLoader implements Loader {
 		lastModified = System.currentTimeMillis();
 		content = Long.toString(lastModified);
 	}
-
+	
 }

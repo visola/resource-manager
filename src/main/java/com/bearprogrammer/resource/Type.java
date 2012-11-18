@@ -48,8 +48,8 @@ public abstract class Type {
 	 * @return A list with all processors or null if none available.
 	 */
 	public Collection<Processor> getProcessors() {
-		ServiceLoader<Processor> serviceLoader = ServiceLoader.load(Processor.class);
 		if (processors == null) {
+			ServiceLoader<Processor> serviceLoader = ServiceLoader.load(Processor.class);
 			processors = new TreeSet<Processor>();
 			for (Processor processor : serviceLoader) {
 				if (processor.supportType(this.getClass().getName())) {
