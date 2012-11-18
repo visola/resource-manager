@@ -3,7 +3,6 @@ package com.bearprogrammer.resource;
 import java.util.Collection;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -13,6 +12,8 @@ import java.util.TreeSet;
  * @author Vinicius Isola
  */
 public abstract class Type {
+	
+	private static Collection<Processor> processors = null;
 	
 	/**
 	 * Return the attribute name that should be used to set the path to the
@@ -41,22 +42,24 @@ public abstract class Type {
 	public abstract Map<String, String> getOtherAttributes();
 	
 	/**
-	 * Return a list containing all the processors available for this type. They
-	 * must be sorted in the order the content should be handled by each one.
+	 * Return a collection containing all the processors available for this type. The collection
+	 * will be already sorted in the order they should be called.
 	 * 
 	 * @return A list with all processors or null if none available.
 	 */
 	public Collection<Processor> getProcessors() {
 		ServiceLoader<Processor> serviceLoader = ServiceLoader.load(Processor.class);
-		Set<Processor> result = new TreeSet<Processor>();
-		for (Processor processor : serviceLoader) {
-			if (processor.supportType(this.getClass().getName())) {
-				result.add(processor);
+		if (processors == null) {
+			processors = new TreeSet<Processor>();
+			for (Processor processor : serviceLoader) {
+				if (processor.supportType(this.getClass().getName())) {
+					processors.add(processor);
+				}
 			}
 		}
-		return result;
+		return processors;
 	}
-
+	
 	/**
 	 * A list of strings that the user could use to reach this specified
 	 * resource type. For example, for a javascript file this could be:
@@ -65,7 +68,7 @@ public abstract class Type {
 	 * @return
 	 */
 	public abstract String[] getSupportedTypes();
-	
+
 	/**
 	 * Return the tag name that is used to load resources of this type
 	 * from an HTML page. Example: javascript = "script"
@@ -73,5 +76,24 @@ public abstract class Type {
 	 * @return The tag name.
 	 */
 	public abstract String getTagName();
+	
+	/**
+	 * Process a content of this type.
+	 * 
+	 * @param content
+	 *            The content to be processed.
+	 * @return The processed content.
+	 * @throws ProcessingException
+	 *             If a problem happens while processing the content.
+	 */
+	public String processContent(String content) throws ProcessingException {
+		Collection<Processor> processors = getProcessors();
+		if (processors != null) {
+			for (Processor processor : processors) {
+				content = processor.process(content);
+			}
+		}
+		return content;
+	}
 
 }

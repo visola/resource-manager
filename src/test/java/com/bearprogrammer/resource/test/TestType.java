@@ -1,6 +1,8 @@
-package com.bearprogrammer.resource;
+package com.bearprogrammer.resource.test;
 
 import java.util.Map;
+
+import com.bearprogrammer.resource.Type;
 
 public class TestType extends Type {
 

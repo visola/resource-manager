@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.bearprogrammer.resource.Loader;
 import com.bearprogrammer.resource.LoaderFactory;
+import com.bearprogrammer.resource.test.TestLoader;
 
 public class LoaderFactoryTest {
 	

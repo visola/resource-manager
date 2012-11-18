@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Centralizes resource loading and caching.
+ * Centralizes resources loading and caching.
  * 
  * @author Vinicius Isola
  */
@@ -40,7 +40,7 @@ public class ResourceContext {
 	/**
 	 * Resource cache.
 	 */
-	private Map<String, Wrapper> resources = new HashMap<String, Wrapper>();
+	private Map<String, ResourceWrapper> resources = new HashMap<String, ResourceWrapper>();
 	
 	private ResourceContext() {
 		logger.debug("Resource context instantiated.");
@@ -64,7 +64,7 @@ public class ResourceContext {
 	public synchronized String getResource(String identifier) throws IOException, ProcessingException, ResourceNotFoundException,  UnknownTypeException {
 		String extension = FilenameUtils.getExtension(identifier);
 		logger.debug("Getting resource: {} ({})", identifier, extension);
-		Wrapper result = resources.get(identifier);
+		ResourceWrapper result = resources.get(identifier);
 		
 		if (result == null) {
 			logger.debug("Resource not in cache, loading...");
@@ -79,7 +79,7 @@ public class ResourceContext {
 				throw new ResourceNotFoundException("No loader available for the specified resource: " + identifier);
 			}
 			
-			result = new Wrapper(identifier, type, loader);
+			result = new ResourceWrapper(identifier, type, loader);
 			resources.put(identifier, result);
 		}
 		

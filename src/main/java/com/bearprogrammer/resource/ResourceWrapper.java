@@ -1,7 +1,6 @@
 package com.bearprogrammer.resource;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Vincius Isola
  */
-public class Wrapper {
+public class ResourceWrapper {
 
-	private Logger logger = LoggerFactory.getLogger(Wrapper.class);
+	private Logger logger = LoggerFactory.getLogger(ResourceWrapper.class);
 	
 	protected String content;
 	protected long lastModified = -1;
@@ -31,7 +30,7 @@ public class Wrapper {
 	 * @param loader
 	 *            {@link Loader} to load the content from.
 	 */
-	public Wrapper(String identifier, Type type, Loader loader) {
+	public ResourceWrapper(String identifier, Type type, Loader loader) {
 		super();
 		this.type = type;
 		this.loader = loader;
@@ -53,7 +52,7 @@ public class Wrapper {
 	public synchronized String getContent() throws IOException, ProcessingException {
 		if (lastModified < loader.lastUpdated(identifier)) {
 			loadContent();
-			processContent();
+			content = type.processContent(content);
 		}
 		return content;
 	}
@@ -71,25 +70,6 @@ public class Wrapper {
 	}
 
 	/**
-	 * Check if the file changed since it was last loaded.
-	 * 
-	 * @return True if the file changed.
-	 */
-	public boolean isChanged () {
-		if (loader.lastUpdated(identifier) > lastModified) return true;
-		return false;
-	}
-
-	/**
-	 * Check if the content was loaded at least once.
-	 * 
-	 * @return True if the content was loaded at least once.
-	 */
-	public boolean isLoaded() {
-		return lastModified == -1;
-	}
-
-	/**
 	 * Load the content from the {@link Loader} associated with. The
 	 * content will be stored in the {@link #content} variable.
 	 * 
@@ -100,20 +80,6 @@ public class Wrapper {
 		logger.debug("Loading content '{}' using loader: {}", identifier, loader.getClass().getName());
 		content = loader.loadResource(identifier);
 		lastModified = loader.lastUpdated(identifier);
-	}
-	
-	/**
-	 * Uses all the {@link Processor processors} available to process the content and
-	 * store the result in the {@link #content} variable.
-	 */
-	protected void processContent() throws ProcessingException {
-		Collection<Processor> processors = type.getProcessors();
-		if (processors != null) {
-			for (Processor processor : processors) {
-				logger.debug("Processing content '{}' using processor: {}", identifier, processor.getClass().getName());
-				content = processor.process(content);
-			}
-		}
 	}
 	
 }

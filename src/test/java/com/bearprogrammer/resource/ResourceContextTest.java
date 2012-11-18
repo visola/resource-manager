@@ -3,12 +3,14 @@ package com.bearprogrammer.resource;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.bearprogrammer.resource.test.TestLoader;
+
 public class ResourceContextTest {
 	
 	@Test
 	public void shouldLoadTestContent() throws Exception {
 		String content = ResourceContext.getInstance().getResource(TestLoader.IDENTIFIER);
-		Assert.assertEquals("Should load test content.", TestLoader.CONTENT, content);
+		Assert.assertEquals("Should load test content.", TestLoader.getContent(), content);
 	}
 	
 	@Test(expected=ResourceNotFoundException.class)
