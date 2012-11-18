@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Wraps a resource.
  * 
- * @author Vincius Isola (vinicusisola@gmail.com)
+ * @author Vincius Isola
  */
 public class Wrapper {
 

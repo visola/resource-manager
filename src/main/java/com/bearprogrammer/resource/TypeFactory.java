@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Load all available {@link Type}s.
  * 
- * @author Vinicius Isola (viniciusisola@gmail.com)
+ * @author Vinicius Isola
  */
 public class TypeFactory {
 	

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Load all available {@link Loader}s registered as service for the
  * <code>Loader</code> interface.
  * 
- * @author Vinicius Isola (viniciusisola@gmail.com)
+ * @author Vinicius Isola
  */
 public class LoaderFactory {
 	

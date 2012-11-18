@@ -6,7 +6,7 @@ import java.io.IOException;
  * A resource loader is responsible to load content from a path. Content
  * can be loaded from many different places like file system, classpath, etc.
  * 
- * @author Vinicius Isola (viniciusisola@gmail.com)
+ * @author Vinicius Isola
  */
 public interface Loader {
 	

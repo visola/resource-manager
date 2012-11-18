@@ -10,7 +10,7 @@ import java.util.TreeSet;
  * A resource type identifies and gives some information about a specific
  * content type. Typical resource type examples are javascript and stylesheets.
  * 
- * @author Vinicius Isola (viniciusisola@gmail.com)
+ * @author Vinicius Isola
  */
 public abstract class Type {
 	
