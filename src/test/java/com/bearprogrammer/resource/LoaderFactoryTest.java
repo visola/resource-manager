@@ -1,9 +1,12 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.bearprogrammer.resource.Loader;
+import com.bearprogrammer.resource.LoaderFactory;
 
 public class LoaderFactoryTest {
 	

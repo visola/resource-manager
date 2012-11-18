@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,10 +44,13 @@ public class Wrapper {
 	 * reprocessed.
 	 * 
 	 * @return The content loaded and processed from the file.
-	 * @throws Exception
-	 *             If any error occur while loading or processing the resource.
+	 * @throws IOException
+	 * @throws ProcessingException
+	 *             If an exception happens while processing the resource.
+	 * @throws IOException
+	 *             If any error occur while loading the resource.
 	 */
-	public synchronized String getContent() throws Exception {
+	public synchronized String getContent() throws IOException, ProcessingException {
 		if (lastModified < loader.lastUpdated(identifier)) {
 			loadContent();
 			processContent();
@@ -103,7 +106,7 @@ public class Wrapper {
 	 * Uses all the {@link Processor processors} available to process the content and
 	 * store the result in the {@link #content} variable.
 	 */
-	protected void processContent() throws Exception {
+	protected void processContent() throws ProcessingException {
 		List<Processor> processors = type.getProcessors();
 		if (processors != null) {
 			for (Processor processor : processors) {

@@ -1,8 +1,8 @@
-package com.bearprogrammer.web.resource.type;
+package com.bearprogrammer.resource.type;
 
 import java.util.Map;
 
-import com.bearprogrammer.web.resource.Type;
+import com.bearprogrammer.resource.Type;
 
 
 public class JavascriptType extends Type {

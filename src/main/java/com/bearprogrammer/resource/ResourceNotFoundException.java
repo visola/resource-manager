@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 public class ResourceNotFoundException extends Exception {
 

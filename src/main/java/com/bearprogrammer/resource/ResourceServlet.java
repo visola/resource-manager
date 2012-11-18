@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class ResourceServlet extends HttpServlet {
 			try {
 				String extension = FilenameUtils.getExtension(file);
 				
-				String content = ResourceContextListener.getInstance().getResource(file, extension);
+				String content = ResourceContext.getInstance().getResource(file, extension);
 				if (content == null) {
 					response.sendError(404, "Resource not found: " + file);
 					return;

@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource.loader;
+package com.bearprogrammer.resource.loader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 
 import javax.servlet.ServletContext;
 
-import com.bearprogrammer.web.resource.Loader;
-import com.bearprogrammer.web.resource.ResourceContextListener;
+import com.bearprogrammer.resource.Loader;
+import com.bearprogrammer.resource.ResourceContext;
 
 
 public class ClasspathLoader implements Loader {
@@ -18,7 +18,7 @@ public class ClasspathLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public ClasspathLoader() {
-		ResourceContextListener instance = ResourceContextListener.getInstance();
+		ResourceContext instance = ResourceContext.getInstance();
 		if (instance != null) {
 			ServletContext context = instance.getServletContext();
 			if (context != null) {

@@ -1,4 +1,6 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
+
+import java.util.Comparator;
 
 /**
  * <p>
@@ -7,13 +9,15 @@ package com.bearprogrammer.web.resource;
  * </p>
  * 
  * <p>
- * Each {@link Type} can have one or more processors that can be invoked
- * in a specified order. The order
+ * Each {@link Type} can have one or more processors that can be invoked in a
+ * specified order. The order to execute the processors will be determined by
+ * the implementation of the {@link Comparator#compare(Object, Object) compare}
+ * method.
  * </p>
  * 
- * @author Vinicius Isola (viniciusisola@gmail.com)
+ * @author Vinicius Isola
  */
-public interface Processor {
+public interface Processor extends Comparator<Processor> {
 
 	/**
 	 * Do the processing.
@@ -21,10 +25,10 @@ public interface Processor {
 	 * @param content
 	 *            The content to be processed.
 	 * @return The processed content.
-	 * @throws Exception
+	 * @throws ProcessingException
 	 *             If any error occur while processing the content.
 	 */
-	public String process(String content) throws Exception;
+	public String process(String content) throws ProcessingException;
 
 	/**
 	 * Check if this processor supports the specified type.

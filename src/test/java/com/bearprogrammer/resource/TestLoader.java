@@ -1,6 +1,8 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.io.IOException;
+
+import com.bearprogrammer.resource.Loader;
 
 public class TestLoader implements Loader {
 	

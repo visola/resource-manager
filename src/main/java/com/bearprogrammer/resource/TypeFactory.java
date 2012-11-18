@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.util.ArrayList;
 import java.util.List;

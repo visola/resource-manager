@@ -1,9 +1,10 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A resource type identifies and gives some information about a specific
@@ -45,9 +46,9 @@ public abstract class Type {
 	 * 
 	 * @return A list with all processors or null if none available.
 	 */
-	public List<Processor> getProcessors() {
+	public Collection<Processor> getProcessors() {
 		ServiceLoader<Processor> serviceLoader = ServiceLoader.load(Processor.class);
-		List<Processor> result = new ArrayList<Processor>();
+		Set<Processor> result = new TreeSet<Processor>();
 		for (Processor processor : serviceLoader) {
 			if (processor.supportType(this.getClass().getName())) {
 				result.add(processor);

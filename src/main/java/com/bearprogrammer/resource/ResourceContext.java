@@ -1,4 +1,4 @@
-package com.bearprogrammer.web.resource;
+package com.bearprogrammer.resource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +10,13 @@ import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResourceContextListener implements ServletContextListener {
+public class ResourceContext implements ServletContextListener {
 
-	private static Logger logger = LoggerFactory.getLogger(ResourceContextListener.class);
+	private static Logger logger = LoggerFactory.getLogger(ResourceContext.class);
 	
-	private static ResourceContextListener instance = null;
+	private static ResourceContext instance = null;
 	
-	public static ResourceContextListener getInstance() {
+	public static ResourceContext getInstance() {
 		return instance;
 	}
 
@@ -24,7 +24,7 @@ public class ResourceContextListener implements ServletContextListener {
 	
 	private ServletContext context = null;
 	
-	public ResourceContextListener() {
+	public ResourceContext() {
 		if (instance == null) {
 			instance = this;
 		} else {
