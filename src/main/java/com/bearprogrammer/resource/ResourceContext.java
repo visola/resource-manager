@@ -1,60 +1,80 @@
 package com.bearprogrammer.resource;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResourceContext implements ServletContextListener {
+/**
+ * Centralizes resource loading and caching.
+ * 
+ * @author Vinicius Isola
+ */
+public class ResourceContext {
 
+	/**
+	 * Private logger.
+	 */
 	private static Logger logger = LoggerFactory.getLogger(ResourceContext.class);
 	
+	/**
+	 * Singleton instance.
+	 */
 	private static ResourceContext instance = null;
 	
+	/**
+	 * Return the <code>ResourceContext</code> instance.
+	 * 
+	 * @return The singleton instance.
+	 */
 	public static ResourceContext getInstance() {
+		if (instance == null) {
+			instance = new ResourceContext();
+		}
 		return instance;
 	}
 
+	/**
+	 * Resource cache.
+	 */
 	private Map<String, Wrapper> resources = new HashMap<String, Wrapper>();
 	
-	private ServletContext context = null;
-	
-	public ResourceContext() {
-		if (instance == null) {
-			instance = this;
-		} else {
-			logger.warn("!!!A resource context was already initialized. This can create strange bugs, please be careful!!!");
-		}
+	private ResourceContext() {
+		logger.debug("Resource context instantiated.");
 	}
 	
-	@Override
-	public void contextDestroyed(ServletContextEvent event) {
-		logger.info("Destroying resource management context...");
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent event) {
-		context = event.getServletContext();
-		logger.info("Initializing resource management context: {}", context.getContextPath());
-	}
-	
-	public synchronized String getResource(String identifier, String typeId) throws Exception {
+	/**
+	 * Get the content of a resource using its extension as the type identifier.
+	 * 
+	 * @param identifier
+	 *            The resource to get the content.
+	 * @return The resource content already processed.
+	 * @throws IOException
+	 *             If any problem happens while loading the resource.
+	 * @throws ResourceNotFoundException
+	 *             If no loader available was able to find the resource.
+	 * @throws ProcessingException
+	 *             If an exception happens while processing the resource.
+	 */
+	public synchronized String getResource(String identifier) throws IOException, ResourceNotFoundException, ProcessingException {
+		String extension = FilenameUtils.getExtension(identifier);
+		logger.debug("Getting resource: {} ({})", identifier, extension);
 		Wrapper result = resources.get(identifier);
 		
 		if (result == null) {
+			logger.debug("Resource not in cache, loading...");
+			
 			Loader loader = LoaderFactory.getLoader(identifier);
 			if (loader == null) {
 				throw new ResourceNotFoundException("No loader available for the specified resource: " + identifier);
 			}
 			
-			Type type = TypeFactory.getType(typeId);
+			Type type = TypeFactory.getType(extension);
 			if (type == null) {
-				throw new IllegalArgumentException("No type available for the specified resource: " + typeId);
+				throw new IllegalArgumentException("No type available for the specified resource: " + extension);
 			}
 			
 			result = new Wrapper(identifier, type, loader);
@@ -64,8 +84,4 @@ public class ResourceContext implements ServletContextListener {
 		return result.getContent();
 	}
 
-	public ServletContext getServletContext() {
-		return context;
-	}
-	
 }
