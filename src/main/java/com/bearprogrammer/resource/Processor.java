@@ -17,7 +17,7 @@ import java.util.Comparator;
  * 
  * @author Vinicius Isola
  */
-public interface Processor extends Comparator<Processor> {
+public interface Processor extends Comparable<Processor> {
 
 	/**
 	 * Do the processing.
