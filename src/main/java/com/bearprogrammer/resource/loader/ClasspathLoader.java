@@ -1,9 +1,11 @@
 package com.bearprogrammer.resource.loader;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 import com.bearprogrammer.resource.Loader;
 
@@ -15,7 +17,11 @@ public class ClasspathLoader implements Loader {
 	private String encoding = DEFAULT_ENCODING;
 	
 	public ClasspathLoader() {
-		// TODO - Need to find a way to configure encoding
+		super();
+	}
+
+	public String getEncoding() {
+		return encoding;
 	}
 
 	@Override
@@ -25,26 +31,33 @@ public class ClasspathLoader implements Loader {
 	}
 
 	@Override
+	public Long lastUpdated(String identifier) {
+		URL url = getClass().getClassLoader().getResource(identifier);
+		if (url.getProtocol().equals("file")) {
+			return new File(url.getPath()).lastModified();
+		}
+		return null;
+	}
+
+	@Override
 	public String loadResource(String identifier) throws IOException {
 		InputStream inStream = getClass().getClassLoader().getResourceAsStream(identifier);
 		
 		StringBuilder content = new StringBuilder();
 		BufferedReader in = new BufferedReader(new InputStreamReader(inStream, encoding));
 		
-		String line = null;
-		while ( (line = in.readLine()) != null) {
-			content.append(line);
-			content.append("\n");
+		char [] buffer = new char[2048];
+		int charsRead = -1;
+		while ( (charsRead = in.read(buffer)) != -1) {
+			content.append(buffer, 0, charsRead);
 		}
-		
 		in.close();
 		
 		return content.toString();
 	}
 
-	@Override
-	public long lastUpdated(String identifier) {
-		return 0;
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 }

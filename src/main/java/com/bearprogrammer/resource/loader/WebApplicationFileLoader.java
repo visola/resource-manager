@@ -9,29 +9,27 @@ import java.io.InputStreamReader;
 import javax.servlet.ServletContext;
 
 import com.bearprogrammer.resource.Loader;
-import com.bearprogrammer.resource.ResourceContext;
-
 
 public class WebApplicationFileLoader implements Loader {
-	// TODO - Need to re-write this class
 	
 	public static final String DEFAULT_ENCODING = "UTF-8";
-	private ServletContext context;
 	
-	private String encoding = DEFAULT_ENCODING;
+	ServletContext context;
+	String encoding = DEFAULT_ENCODING;
 	
 	public WebApplicationFileLoader() {
-//		ResourceContext instance = ResourceContext.getInstance();
-//		if (instance != null) {
-//			context = instance.getServletContext();
-//			if (context != null) {
-//				String encoding = context.getInitParameter(WebApplicationFileLoader.class.getName().concat(".encoding"));
-//				if (encoding != null) this.encoding = encoding;
-//			}
-//		}
+		
 	}
 	
-	private File getFile(String identifier) {
+	public ServletContext getContext() {
+		return context;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	File getFile(String identifier) {
 		File f = null;
 		if (context != null) {
 			String realPath = context.getRealPath(identifier);
@@ -44,6 +42,13 @@ public class WebApplicationFileLoader implements Loader {
 	public boolean hasResource(String identifier) throws IOException {
 		File f = getFile(identifier);
 		return f != null && f.exists() && f.isFile();
+	}
+
+	@Override
+	public Long lastUpdated(String identifier) {
+		File f = getFile(identifier);
+		if (f == null) return 0L;
+		return f.lastModified();
 	}
 
 	@Override
@@ -64,11 +69,12 @@ public class WebApplicationFileLoader implements Loader {
 		return content.toString();
 	}
 
-	@Override
-	public long lastUpdated(String identifier) {
-		File f = getFile(identifier);
-		if (f == null) return 0;
-		return f.lastModified();
+	public void setContext(ServletContext context) {
+		this.context = context;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 }

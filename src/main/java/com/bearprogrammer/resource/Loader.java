@@ -36,8 +36,8 @@ public interface Loader {
 	 * @param identifier
 	 *            The resource identifier.
 	 * @return A timestamp that tells the last time the resource was updated or
-	 *         -1 if not possible to determine.
+	 *         null if not possible to determine.
 	 */
-	public long lastUpdated(String identifier);
+	public Long lastUpdated(String identifier);
 
 }

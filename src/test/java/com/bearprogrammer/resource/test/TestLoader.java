@@ -17,7 +17,7 @@ public class TestLoader implements Loader {
 	}
 
 	@Override
-	public long lastUpdated(String identifier) {
+	public Long lastUpdated(String identifier) {
 		return lastModified;
 	}
 
