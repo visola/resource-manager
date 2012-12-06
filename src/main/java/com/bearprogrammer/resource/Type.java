@@ -13,7 +13,10 @@ import java.util.TreeSet;
  */
 public abstract class Type {
 	
-	private static Collection<Processor> processors = null;
+	/**
+	 * Store all processors for this specific type.
+	 */
+	Collection<Processor> processors = null;
 	
 	/**
 	 * Return the attribute name that should be used to set the path to the

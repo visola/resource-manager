@@ -1,0 +1,9 @@
+.red {
+	color: red;
+}
+
+#SomeElement {
+	background: rgb(10,20,30);
+	border: 1px solid black;
+	color: black;
+}

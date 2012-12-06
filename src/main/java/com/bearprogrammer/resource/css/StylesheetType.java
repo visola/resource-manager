@@ -1,4 +1,4 @@
-package com.bearprogrammer.resource.type;
+package com.bearprogrammer.resource.css;
 
 import java.util.HashMap;
 import java.util.Map;

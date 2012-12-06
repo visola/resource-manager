@@ -1,4 +1,4 @@
-package com.bearprogrammer.resource.type;
+package com.bearprogrammer.resource.js;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import com.bearprogrammer.resource.Type;
 
 public class JavascriptType extends Type {
 	
-	private String [] supportedTypes = new String [] {"javascript", "script", "js"}; 
+	public static final String [] SUPPORTED_TYPES = new String [] {"javascript", "script", "js"}; 
 
 	@Override
 	public String getTagName() {
@@ -21,7 +21,7 @@ public class JavascriptType extends Type {
 
 	@Override
 	public String[] getSupportedTypes() {
-		return supportedTypes;
+		return SUPPORTED_TYPES;
 	}
 
 	@Override

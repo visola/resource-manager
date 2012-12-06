@@ -1,10 +1,5 @@
 package com.bearprogrammer.resource;
 
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Wraps a resource.
  * 
@@ -12,12 +7,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ResourceWrapper {
 
-	private Logger logger = LoggerFactory.getLogger(ResourceWrapper.class);
-	
 	protected String content;
-	protected long lastModified = -1;
+	protected long lastLoaded = -1;
 	protected final Type type;
-	protected final Loader loader;
 	protected final String identifier;
 
 	/**
@@ -27,59 +19,36 @@ public class ResourceWrapper {
 	 *            Identifier to access the resource.
 	 * @param type
 	 *            {@link Type} for this resource.
-	 * @param loader
-	 *            {@link Loader} to load the content from.
+	 * @param content
+	 *            The resource content.
 	 */
-	public ResourceWrapper(String identifier, Type type, Loader loader) {
+	public ResourceWrapper(String identifier, Type type, String content) {
 		super();
+		this.content = content;
 		this.type = type;
-		this.loader = loader;
 		this.identifier = identifier;
+		lastLoaded = System.currentTimeMillis();
 	}
 
-	/**
-	 * Return the content loaded and processed. If the resource was
-	 * {@link Loader#lastUpdated(String) updated} it will be reloaded and
-	 * reprocessed.
-	 * 
-	 * @return The content loaded and processed from the file.
-	 * @throws IOException
-	 * @throws ProcessingException
-	 *             If an exception happens while processing the resource.
-	 * @throws IOException
-	 *             If any error occur while loading the resource.
-	 */
-	public synchronized String getContent() throws IOException, ProcessingException {
-		if (lastModified < loader.lastUpdated(identifier)) {
-			loadContent();
-			content = type.processContent(content);
-		}
+	public String getContent() {
 		return content;
 	}
-
+	
 	public String getIdentifier() {
 		return identifier;
 	}
-	
-	public Loader getLoader() {
-		return loader;
+
+	public long getLastLoaded() {
+		return lastLoaded;
 	}
 
 	public Type getType() {
 		return type;
 	}
 
-	/**
-	 * Load the content from the {@link Loader} associated with. The
-	 * content will be stored in the {@link #content} variable.
-	 * 
-	 * @throws IOException
-	 *             If any problem occurs while reading the content.
-	 */
-	protected void loadContent() throws IOException {
-		logger.debug("Loading content '{}' using loader: {}", identifier, loader.getClass().getName());
-		content = loader.loadResource(identifier);
-		lastModified = loader.lastUpdated(identifier);
+	public void setContent(String content) {
+		this.content = content;
+		this.lastLoaded = System.currentTimeMillis();
 	}
-	
+
 }

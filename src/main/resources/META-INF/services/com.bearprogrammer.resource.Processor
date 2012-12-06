@@ -1,0 +1,3 @@
+com.bearprogrammer.resource.css.YUIStylesheetProcessor
+com.bearprogrammer.resource.js.ClosureCompilerProcessor
+

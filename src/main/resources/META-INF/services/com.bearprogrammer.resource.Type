@@ -1,2 +1,2 @@
-com.bearprogrammer.resource.type.JavascriptType
-com.bearprogrammer.resource.type.StylesheetType
+com.bearprogrammer.resource.js.JavascriptType
+com.bearprogrammer.resource.css.StylesheetType
