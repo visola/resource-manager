@@ -1,26 +1,14 @@
 package com.bearprogrammer.resource.css;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.bearprogrammer.resource.Type;
+import com.bearprogrammer.resource.TypeTag;
 
 
 public class StylesheetType extends Type {
 	
-	private String [] supportedTypes = new String [] {"css", "stylesheet"};
+	static final TypeTag typeTag = new StylesheetTypeTag();
 	
-	private Map<String, String> attributes = new HashMap<String, String>();
-
-	public StylesheetType() {
-		attributes.put("type", "text/css");
-		attributes.put("rel", "stylesheet");
-	}
-	
-	@Override
-	public String getTagName() {
-		return "link";
-	}
+	String [] supportedTypes = new String [] {"css", "stylesheet"};
 
 	@Override
 	public String getContentType() {
@@ -33,13 +21,8 @@ public class StylesheetType extends Type {
 	}
 
 	@Override
-	public String getAttributeName() {
-		return "href";
-	}
-
-	@Override
-	public Map<String, String> getOtherAttributes() {
-		return attributes;
+	public TypeTag getTypeTag() {
+		return typeTag;
 	}
 	
 }

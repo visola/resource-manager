@@ -3,7 +3,6 @@ package com.bearprogrammer.resource;
 import java.util.Collection;
 
 import junit.framework.Assert;
-import mockit.Deencapsulation;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +16,6 @@ public class TypeTest {
 	
 	@Before
 	public void init() {
-		// Make sure processor will be reloaded every test
-		Deencapsulation.setField(TestType.class, "processors", null);
-		
 		type = new TestType();
 	}
 	

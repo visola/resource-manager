@@ -1,18 +1,13 @@
 package com.bearprogrammer.resource.js;
 
-import java.util.Map;
-
 import com.bearprogrammer.resource.Type;
-
+import com.bearprogrammer.resource.TypeTag;
 
 public class JavascriptType extends Type {
 	
+	static final TypeTag typeTag = new JavascriptTypeTag();
+	
 	public static final String [] SUPPORTED_TYPES = new String [] {"javascript", "script", "js"}; 
-
-	@Override
-	public String getTagName() {
-		return "script";
-	}
 
 	@Override
 	public String getContentType() {
@@ -25,13 +20,9 @@ public class JavascriptType extends Type {
 	}
 
 	@Override
-	public String getAttributeName() {
-		return "src";
+	public TypeTag getTypeTag() {
+		return typeTag;
 	}
 
-	@Override
-	public Map<String, String> getOtherAttributes() {
-		return null;
-	}
-
+	
 }

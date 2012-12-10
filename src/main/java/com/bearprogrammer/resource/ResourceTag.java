@@ -21,23 +21,19 @@ import org.slf4j.LoggerFactory;
 
 public class ResourceTag extends SimpleTagSupport {
 	
-	private static final String DEFAULT_ENCODING = "UTF-8";
-	private static final String DEFAULT_SERVLET_PATH = "/resources.do";
+	static final Logger LOGGER = LoggerFactory.getLogger(ResourceTag.class);
 	
-	private String servletPath = DEFAULT_SERVLET_PATH;
-	private String encoding = DEFAULT_ENCODING;
+	static final String DEFAULT_ENCODING = "UTF-8";
+	static final String DEFAULT_SERVLET_PATH = "/resources.do";
 	
-	private Logger logger = LoggerFactory.getLogger(ResourceTag.class);
+	String servletPath;
+	String encoding = DEFAULT_ENCODING;
 	
 	@Override
 	public void doTag() throws JspException, IOException {
 		PageContext context = (PageContext)getJspContext();
 		
-		// Check for the servlet path from a init parameter
-		String servletPath = context.getServletContext().getInitParameter(ResourceTag.class.getName().concat("servletPath"));
-		if (servletPath != null) {
-			this.servletPath = servletPath;
-		}
+		initialize(context);
 		
 		// Add context path to resource servlet name
 		this.servletPath = context.getServletContext().getContextPath() + this.servletPath;
@@ -70,7 +66,7 @@ public class ResourceTag extends SimpleTagSupport {
 				filesByExtension.put(extension, filesForExtension);
 			}
 			
-			logger.debug("File: {}, Extension: {}", file, extension);
+			LOGGER.debug("File: {}, Extension: {}", file, extension);
 			filesForExtension.add(file);
 		}
 		
@@ -88,15 +84,25 @@ public class ResourceTag extends SimpleTagSupport {
 		// write it to the output
 		context.getOut().write(result.toString());
 	}
+
+	synchronized void initialize(PageContext context) {
+		if (servletPath == null) {
+			// Check for the servlet path from a init parameter
+			String servletPath = context.getServletContext().getInitParameter(ResourceTag.class.getName().concat("servletPath"));
+			if (servletPath != null) {
+				this.servletPath = servletPath;
+			}
+		}
+	}
 	
 	private String createTag(List<String> files, Type type) throws UnsupportedEncodingException {
 		StringBuilder tag = new StringBuilder();
 		tag.append("<");
-		tag.append(type.getTagName());
+		tag.append(type.getTypeTag().getTagName());
 		
 		// Set the path to the servlet
 		tag.append(" ");
-		tag.append(type.getAttributeName());
+		tag.append(type.getTypeTag().getAttributeName());
 		tag.append("=\"");
 		tag.append(servletPath);
 		tag.append("?");
@@ -115,7 +121,7 @@ public class ResourceTag extends SimpleTagSupport {
 		tag.append("\"");
 		
 		// Add all other attributes
-		Map<String, String> otherAttributes = type.getOtherAttributes();
+		Map<String, String> otherAttributes = type.getTypeTag().getOtherAttributes();
 		if (otherAttributes != null) {
 			for (Entry<String, String> attribute : otherAttributes.entrySet()) {
 				tag.append(attribute.getKey());
@@ -127,7 +133,7 @@ public class ResourceTag extends SimpleTagSupport {
 		
 		// Close the tag
 		tag.append("></");
-		tag.append(type.getTagName());
+		tag.append(type.getTypeTag().getTagName());
 		tag.append(">");
 		
 		return tag.toString();
