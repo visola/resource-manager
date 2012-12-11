@@ -91,6 +91,8 @@ public class ResourceTag extends SimpleTagSupport {
 			String servletPath = context.getServletContext().getInitParameter(ResourceTag.class.getName().concat("servletPath"));
 			if (servletPath != null) {
 				this.servletPath = servletPath;
+			} else {
+				this.servletPath = DEFAULT_SERVLET_PATH;
 			}
 		}
 	}
