@@ -1,0 +1,36 @@
+= Resource Manager =
+
+Resource Manager is a library to be added to web applications written in Java to manage multiple HTTP requests more efficiently. This library is composed of two main pieces:
+* Resource Servlet - a servlet that can load multiple resources in the server side and return them in one single request
+* Resource Tag - a JSP tag that helps to manage resources that needs to be loaded in a page
+
+For an example, check the project inside the '''example''' folder.
+
+== Resource Servlet ==
+
+To make a request to the resource servlet, you need to send a parameter called '''file''' that will show multiple times, one for each file that you want to load in the request. By default the response will come back as one long concatenated file in the same order the '''file''' parameter was passed in.
+
+If the request is made with a '''.json''' extension instead, it will respond with a JSON object containing all the requested file content and names.
+
+The resource servlet can load resources from the classpath or from inside the web application. After loading a resource it will use the specified types to find processors that will be used to further process them (minify, compress, etc.). The resource loaded and processed will be stored in memory until it changes or until the application is restarted.
+
+== Resource Tag ==
+
+The Resource Tag is a tag that can be used to simplify and make resource management more efficient in JSP pages. The following is an example of how to use it:
+
+First import the tag library:
+<pre>
+<%@taglib prefix="b" uri="http://www.bearprogrammer.com/web/resources" %>
+</pre>
+
+Then you create a tag and put in the body of it the resource files you need. You can mix javascript and stylesheet:
+<pre>
+<b:resources>
+	js/01.js
+	js/02.js
+	css/01.css
+	css/02.css
+</b:resources>
+</pre>
+
+
