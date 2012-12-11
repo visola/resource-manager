@@ -6,6 +6,10 @@ Resource Manager is a library to be added to web applications written in Java to
 
 For an example, check the project inside the '''example''' folder.
 
+== License ==
+
+This code is licensed under the MIT license, stored in the LICENSE file.
+
 == Resource Servlet ==
 
 To make a request to the resource servlet, you need to send a parameter called '''file''' that will show multiple times, one for each file that you want to load in the request. By default the response will come back as one long concatenated file in the same order the '''file''' parameter was passed in.
