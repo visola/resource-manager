@@ -1,0 +1,12 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+repositories { 
+	mavenCentral()
+	mavenLocal()
+}
+
+dependencies {
+	compile 'com.bearprogrammer.web:resource-manager:1.0.1'
+	compile 'ch.qos.logback:logback-classic:1.0.7'
+}
