@@ -1,6 +1,18 @@
+buildscript {
+	repositories {
+    mavenCentral()
+  }
+	dependencies {
+    classpath "net.saliman:gradle-cobertura-plugin:1.1.1"
+  }
+}
+
 apply plugin: "java"
 apply plugin: "eclipse"
 apply plugin: "maven"
+apply plugin: "cobertura"
+
+apply from: "https://raw.github.com/visola/root/master/root.gradle"
 
 group = "com.bearprogrammer.web"
 version = "1.0.1"
@@ -10,19 +22,17 @@ repositories {
 	mavenLocal()
 }
 
-buildscript {
-	apply from:'https://raw.github.com/breskeby/gradleplugins/master/emmaPlugin/emma.gradle'
-}
-
 dependencies {
-	compile 'com.google.javascript:closure-compiler:rr2079.1'
-	compile 'com.yahoo.platform.yui:yuicompressor:2.4.7'
-	compile 'javax.servlet:javax.servlet-api:3.0.1'
-	compile 'javax.servlet.jsp:jsp-api:2.2'
-	compile 'org.apache.commons:commons-io:1.3.2'
-	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.11'
-	compile 'org.slf4j:slf4j-api:1.7.2'
+	
 
-	testCompile 'com.googlecode.jmockit:jmockit:0.999.18'
-	testCompile 'junit:junit:4.10'
+	compile library.closure_compiler
+	compile library.yui_compressor
+	compile library.javax_servlet
+	compile library.javax_jsp
+	compile library.commons_io
+	compile library.jackson_old_mapper
+	compile library.slf4j
+
+	testCompile library.jmockit
+	testCompile library.junit
 }
